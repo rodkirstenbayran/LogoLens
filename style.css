@@ -1,0 +1,130 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(120deg, #e0e7ff 0%, #f8fafc 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 480px;
+    margin: 3em auto;
+    background: #fff;
+    border-radius: 14px;
+    padding: 2.5em 2em 2em 2em;
+    box-shadow: 0 8px 32px rgba(60,60,180,0.12), 0 1.5px 0 #7e94fc;
+    position: relative;
+    z-index: 1;
+}
+
+h2, h3 {
+    color: #3b4cca;
+    margin-bottom: 1em;
+    font-weight: 700;
+}
+
+input, textarea, select {
+    width: 100%;
+    margin-bottom: 1.1em;
+    padding: 0.65em 0.9em;
+    border: 1.5px solid #cdd0e0;
+    border-radius: 6px;
+    background: #f3f6fd;
+    font-size: 1em;
+    transition: border 0.2s, background 0.2s;
+}
+
+input:focus, textarea:focus, select:focus {
+    border: 1.5px solid #5c73e6;
+    background: #eef2ff;
+    outline: none;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.btn {
+    padding: 0.6em 2.2em;
+    background: linear-gradient(90deg, #5c73e6 0%, #3b4cca 100%);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+    box-shadow: 0 2px 8px rgba(80,110,230,0.10);
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn:hover, .btn:focus {
+    background: linear-gradient(90deg, #3b4cca 0%, #5c73e6 100%);
+    transform: translateY(-1px) scale(1.03);
+}
+
+a.btn {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.msg {
+    margin: 1em 0;
+    color: #1a7e2b;
+    background: #e9f7ef;
+    border-left: 4px solid #29b164;
+    padding: 0.7em 1em;
+    border-radius: 5px;
+}
+
+.error {
+    color: #d63636;
+    background: #fde9e9;
+    border-left: 4px solid #ff5d5d;
+    padding: 0.7em 1em;
+    border-radius: 5px;
+    margin-bottom: 1em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f8fafc;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.5em;
+    box-shadow: 0 2px 8px rgba(60,60,180,0.06);
+}
+
+th, td {
+    padding: 0.8em 1em;
+    text-align: left;
+}
+
+th {
+    background: #e0e7ff;
+    color: #3b4cca;
+    font-weight: 700;
+    border-bottom: 2px solid #c3d0fc;
+}
+
+tr:nth-child(even) {
+    background: #f3f6fd;
+}
+
+tr:hover {
+    background: #eaf1fe;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1em 0.6em;
+        max-width: 98vw;
+    }
+    th, td {
+        padding: 0.5em 0.6em;
+    }
+} 
