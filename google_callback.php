@@ -4,8 +4,8 @@ session_start();
 require_once 'helpers.php';
 
 $client = new Google_Client();
-$client->setClientId('');
-$client->setClientSecret('');
+$client->setClientId('346286691518-1idir0681o5bskm6ih966qhebgscigbr.apps.googleusercontent.com');
+$client->setClientSecret('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');
 $client->setRedirectUri('http://localhost/logo_lens/google_callback.php');
 $client->addScope('email');
 $client->addScope('profile');
@@ -31,22 +31,30 @@ $stmt->execute([$oauth_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($user) {
-    $_SESSION['user_id'] = $user['id'];
+    // User exists, nothing to do
 } else {
     $stmt = $pdo->prepare("INSERT INTO users (email, name, oauth_provider, oauth_id, registered_via) VALUES (?, ?, 'google', ?, 'google')");
     $stmt->execute([$email, $name, $oauth_id]);
-    $_SESSION['user_id'] = $pdo->lastInsertId();
+    $user_id = $pdo->lastInsertId();
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id=?");
-    $stmt->execute([$_SESSION['user_id']]);
+    $stmt->execute([$user_id]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-// If 2FA not set up, generate and redirect to QR/2FA page
+// If 2FA not set up, generate and save TOTP secret
 if (empty($user['totp_secret'])) {
     $secret = generate_totp_secret();
     $stmt = $pdo->prepare("UPDATE users SET totp_secret=? WHERE id=?");
     $stmt->execute([$secret, $user['id']]);
+    $user['totp_secret'] = $secret; // Keep user object up to date
 }
+
+// Set pending session for 2FA (do NOT log in fully yet)
+$_SESSION['pending_user_id'] = $user['id'];
+// Unset any old user_id session
+unset($_SESSION['user_id']);
+
+// Always redirect to 2FA QR/code page
 header('Location: show_qr.php');
 exit;
 ?>

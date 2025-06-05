@@ -3,14 +3,14 @@ session_start();
 require_once 'vendor/autoload.php';
 require_once 'helpers.php';
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['pending_user_id'])) {
     header('Location: index.php');
     exit;
 }
 
 $pdo = getDb();
 $stmt = $pdo->prepare("SELECT email, totp_secret FROM users WHERE id=?");
-$stmt->execute([$_SESSION['user_id']]);
+$stmt->execute([$_SESSION['pending_user_id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$user) {
@@ -18,16 +18,22 @@ if (!$user) {
     exit;
 }
 
-$error = '';
-$success = false;
+if (empty($user['totp_secret'])) {
+    // Just in case!
+    $totp = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
+    $newSecret = $totp->generateSecret();
+    $update = $pdo->prepare("UPDATE users SET totp_secret=? WHERE id=?");
+    $update->execute([$newSecret, $_SESSION['pending_user_id']]);
+    $user['totp_secret'] = $newSecret;
+}
 
-// Handle form submission for 2FA code verification
+$error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['code'])) {
     $code = $_POST['code'];
     $totp = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
     if ($totp->checkCode($user['totp_secret'], $code)) {
-        // 2FA successful
-        // User is already logged in (user_id set), so just redirect
+        $_SESSION['user_id'] = $_SESSION['pending_user_id'];
+        unset($_SESSION['pending_user_id']);
         header('Location: index.php');
         exit;
     } else {
@@ -35,13 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['code'])) {
     }
 }
 
-// Generate QR code URL (static method!)
+// Generate QR code URL
 $qrUrl = \Sonata\GoogleAuthenticator\GoogleQrUrl::generate(
     $user['email'],
     $user['totp_secret'],
     'LogoLensApp'
 );
+// ...rest of HTML
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
