@@ -7,6 +7,7 @@ if (isset($_SESSION['user_id'])) {
 $error = $_GET['error'] ?? '';
 $success = $_GET['success'] ?? '';
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,8 @@ $success = $_GET['success'] ?? '';
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
+<div class="auth_wrapper">    
+<div class="container_log">
     <h2>Register</h2>
     <?php if ($error): ?>
         <p style="color:red"><?= htmlspecialchars($error) ?></p>
@@ -27,11 +29,14 @@ $success = $_GET['success'] ?? '';
         <input type="email" name="email" placeholder="Email" required /><br>
         <input type="password" name="password" placeholder="Password" required /><br>
         <input type="password" name="confirm" placeholder="Confirm Password" required /><br>
-        <button type="submit" name="register" class="btn">Register</button>
+        <button type="submit" name="register" class="btn_submit">Register</button>
     </form>
     <p>Already have an account? <a href="index.php">Login here</a></p>
-    <a href="index.php" class="btn">Back to Home</a>
     <?php endif; ?>
+</div>
+<div class="display_logo">
+    <img src="cover/logo_logolens.png" alt="LogoLens Logo" class="logo_img">
+</div>
 </div>
 </body>
 </html>

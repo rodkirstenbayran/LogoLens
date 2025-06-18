@@ -22,6 +22,21 @@ $msg = isset($_GET['msg']) ? htmlspecialchars($_GET['msg']) : '';
     </style>
 </head>
 <body>
+<div class="navbar">
+            <a href="view_logos.php">
+                <img src="cover/logo.png" alt="Logo">
+            </a>
+                <div class="dropdown">
+                    <button>User</button>
+                    <div class="dropdown-content">
+                        <a href="change_password.php">Change Password</a>
+                         <a href="logout.php">Logout</a>
+                    </div>
+                </div>
+        </div>
+            <a href="upload_logo_form.php">
+            <img src="cover/upload.png" alt="Upload" class="upload_btn">
+            </a>
 <div class="container">
     <h3>My Logo Metadata</h3>
     <?php if ($msg): ?><div class="msg"><?= $msg ?></div><?php endif; ?>
@@ -51,7 +66,6 @@ $msg = isset($_GET['msg']) ? htmlspecialchars($_GET['msg']) : '';
             </tr>
         <?php endforeach; ?>
     </table>
-    <a href="index.php" class="btn">Back</a>
 </div>
 </body>
 </html>
