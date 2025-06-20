@@ -208,6 +208,17 @@ a.btn {
     z-index: 1;
 }
 
+.container_qr {
+    max-width: 480px;
+    margin: 3em auto;
+    background: #fff;
+    border-radius: 14px;
+    padding: 2.5em 2em 2em 2em;
+    box-shadow: 0 8px 32px rgba(60,60,180,0.12), 0 1.5px 0 #7e94fc;
+    position: relative;
+    z-index: 1;
+}
+
 .msg {
     margin: 1em 0;
     color: #1a7e2b;

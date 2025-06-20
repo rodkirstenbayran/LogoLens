@@ -55,18 +55,19 @@ $qrUrl = \Sonata\GoogleAuthenticator\GoogleQrUrl::generate(
 <head>
     <title>Set up Two-Factor Authentication</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { max-width: 350px; margin: 40px auto; padding: 25px; border: 1px solid #d0d0d0; border-radius: 8px; }
+        /* body { font-family: Arial, sans-serif; } */
+        /* .container { max-width: 35px; margin: 40px auto; padding: 25px; border: 1px solid #d0d0d0; border-radius: 8px; } */
         .error { color: #b00; margin-bottom: 10px; }
         .success { color: #080; }
-        label { display: block; margin: 15px 0 6px 0; }
-        input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        /* label { display: block; margin: 15px 0 6px 0; } */
+        /* input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; } */
         button { margin-top: 15px; padding: 8px 18px; }
         img { display: block; margin: 15px auto; }
     </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container_qr">
         <h2>Two-Factor Authentication Setup</h2>
         <p>1. Scan this QR code with Google Authenticator or enter this code manually:</p>
         <div style="text-align:center;">
